@@ -23,34 +23,34 @@ slightly modified based on Orient Telecom's resources and requirements.
 ```mermaid
 sequenceDiagram
     actor Developer
-    participant Gitea Service
-    participant Gitea Action
-    participant Gitea Issue
+    participant Git Service
+    participant Git Action
+    participant Git Issue
     participant Docker/Kubernetes Service
     Note over Developer: Step 01:
-    Developer->>Gitea Issue: Create new Issue (PM or Developer)
-    Gitea Issue->>Developer: Retrieve Issue number
+    Developer->>Git Issue: Create new Issue (PM or Developer)
+    Git Issue->>Developer: Retrieve Issue number
     Note over Developer: Step 02:
     Developer->>Developer: Create new branch with Issue number
-    Developer->>Gitea Service: Push new branch
-    Gitea Service->>Gitea Action: Check branch name
-    Gitea Action->>Gitea Issue: Update Issue task (backlog -> in progress)
+    Developer->>Git Service: Push new branch
+    Git Service->>Git Action: Check branch name
+    Git Action->>Git Issue: Update Issue task (backlog -> in progress)
     Note over Developer: Step 03:
     Developer->>Developer: Work on the task
-    Developer->>Gitea Service: Git commmit & push (CI/CD check)
-    Developer->>Gitea Service: Create new pull request (PR)
-    Gitea Service->>Gitea Action: Check PR title
-    Gitea Action->>Gitea Issue: Update Issue task (in progress -> code review)
-    Note over Gitea Service: 1. Coding Style
-    Note over Gitea Service: 2. Unit Test
-    Note over Gitea Service: 3. Integration Test
-    Note over Gitea Service: 4. Security Check
+    Developer->>Git Service: Git commmit & push (CI/CD check)
+    Developer->>Git Service: Create new pull request (PR)
+    Git Service->>Git Action: Check PR title
+    Git Action->>Git Issue: Update Issue task (in progress -> code review)
+    Note over Git Service: 1. Coding Style
+    Note over Git Service: 2. Unit Test
+    Note over Git Service: 3. Integration Test
+    Note over Git Service: 4. Security Check
     Note over Developer: Step 04:
     Developer->>Developer: Code review (minimum 1 reviewer)
-    Developer->>Gitea Service: Merge pull request (squash)
-    Gitea Service->>Gitea Action: Trigger CI/CD
-    Gitea Action->>Gitea Issue: Update Issue task (code review -> done)
-    Gitea Action->>Docker/Kubernetes Service: Deploy to staging
+    Developer->>Git Service: Merge pull request (squash)
+    Git Service->>Git Action: Trigger CI/CD
+    Git Action->>Git Issue: Update Issue task (code review -> done)
+    Git Action->>Docker/Kubernetes Service: Deploy to staging
 ```
 
 ### 01. Git setup
@@ -78,7 +78,7 @@ These are some key points when creating a new repository:
 - Do not commit large binary files to the repository.
 - Do not commit sensitive information such as passwords, API keys, or access tokens
   to the repository.
-- Do not create repositories for personal projects on the company's Gitea instance.
+- Do not create repositories for personal projects on the company's Git instance.
 - All repositories should be created as Private. Do not make the code public.
 
 ### 03. Software development workflow
@@ -108,12 +108,12 @@ Use the following texts to identify the type of changes:
 - `refactor`: Refactoring.
 - `test`: Testing.
 - `chore`: Maintenance tasks.
-Example: `feat(123): add-new-feature`. `123` refers to the Gitea issue number.
+Example: `feat(123): add-new-feature`. `123` refers to the Git issue number.
 
 #### 3.3 Code review
 
 At least 1 team member should review and approve the changes.
-Use automated tests with Gitea Actions to ensure the code quality.
+Use automated tests with Git Actions to ensure the code quality.
 Squash Commit feature should be used to keep history clean and avoid unnecessary
 merge commits.
 
@@ -121,7 +121,7 @@ merge commits.
 
 Use tags to mark important version points, e.g. `v1.0.0`.
 Follow semantic versioning rules, with the format MAJOR.MINOR.PATCH.
-Integrate Gitea Action with push and tag for automated deployment to staging and
+Integrate Git Action with push and tag for automated deployment to staging and
 production environments.
 
 #### 3.5 Security
@@ -131,7 +131,7 @@ Do not include personal sensitive information in the codebase.
 - Use `.env` files to store sensitive information.
 - Add `.env` files to the `.gitignore` list.
 
-Use Gitea Secrets for deployment-related sensitive information.
+Use Git Secrets for deployment-related sensitive information.
 
 #### 3.6 Documentation
 
